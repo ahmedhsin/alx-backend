@@ -11,6 +11,7 @@ def index_range(page: int, page_size: int) -> tuple:
     end = start + page_size
     return (start, end)
 
+
 class Server:
     """Server class to paginate a database of popular baby names.
     """
@@ -31,16 +32,39 @@ class Server:
         return self.__dataset
 
     def get_page(self, page: int = 1, page_size: int = 10) -> List[List]:
-            """get ranged dataset"""
-            assert (type(page) == int and type(page_size) == int)
-            assert (page > 0 and page_size > 0)
-            ac_range = index_range(page, page_size)
-            start = ac_range[0]
-            end  = ac_range[1]
-            data = self.dataset()
-            if start > end or end > len(data) - 1:
-                return []
-            return data[start:end]
+        """get ranged dataset"""
+        assert (type(page) == int and type(page_size) == int)
+        assert (page > 0 and page_size > 0)
+        ac_range = index_range(page, page_size)
+        start = ac_range[0]
+        end = ac_range[1]
+        data = self.dataset()
+        if start > end or end > len(data) - 1:
+            return []
+        return data[start:end]
+
     def get_hyper(self, page: int = 1, page_size: int = 10) -> dict:
+        """return data with metadata"""
+        data = self.get_page(page, page_size)
+        page__size = len(data)
+        total_pages = int(math.ceil(len(self.dataset()) / page_size))
+        next_page = 0
+        prev_page = 0
+        if page >= total_pages:
+            next_page = None
+        else:
+            next_page = page + 1
+        if page == 1:
+            prev_page = None
+        else:
+            prev_page = page - 1
 
-
+        dic = {
+                'page_size': page__size,
+                'page': page,
+                'data': data,
+                'next_page': next_page,
+                'prev_page': prev_page,
+                'total_pages': total_pages
+                }
+        return dic
