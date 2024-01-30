@@ -19,8 +19,8 @@ def get_victim(tracker):
 class LFUCache(BaseCaching):
     """basic lfu cache is just a simple dict"""
     def __init__(self):
-        super().__init__()
         self.tracker = {}
+        super().__init__()
 
     def put(self, key, item):
         """put function"""
