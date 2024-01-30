@@ -51,7 +51,7 @@ class Server:
         for key, val in ids.items():
             if index >= key:
                 items.append(val)
-            if len(items) == index + page_size:
+            if len(items) == (page_size - index):
                 last = key + 1
                 break
 
