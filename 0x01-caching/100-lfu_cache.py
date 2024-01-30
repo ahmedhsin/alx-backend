@@ -6,6 +6,7 @@ BaseCaching = __import__('base_caching').BaseCaching
 
 
 def get_victim(tracker):
+    """get victim with least calls"""
     mn = 999999
     print(str(tracker))
     val = None
