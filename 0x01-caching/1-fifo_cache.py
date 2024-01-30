@@ -14,6 +14,10 @@ class FIFOCache(BaseCaching):
         """put function"""
         if key is None or item is None:
             return
+        if key in self.cache_data:
+            self.cache_data[key] = item
+            return
+
         if len(self.cache_data) == BaseCaching.MAX_ITEMS:
             first = next(iter(self.cache_data))
             del self.cache_data[first]
