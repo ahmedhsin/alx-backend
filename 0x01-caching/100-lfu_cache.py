@@ -28,7 +28,7 @@ class LFUCache(BaseCaching):
         if key is None or item is None:
             return
         if key in self.cache_data:
-            del self.tracker[key]
+            self.tracker[key] += 1
             del self.cache_data[key]
 
         if len(self.cache_data) == BaseCaching.MAX_ITEMS:
@@ -37,7 +37,8 @@ class LFUCache(BaseCaching):
             del self.tracker[first]
             print(f'DISCARD: {first}')
 
-        self.tracker[key] = 0
+        if key not in self.tracker:
+            self.tracker[key] = 0
         self.cache_data[key] = item
 
     def get(self, key):
